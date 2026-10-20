@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payment_approval_policy_form" model="ir.ui.view">
+        <field name="name">payment.approval.policy.form</field>
+        <field name="model">payment.approval.policy</field>
+        <field name="arch" type="xml">
+            <form string="Política de Aprobación">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="minimum_amount"/>
+                            <field name="maximum_amount"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="validation_steps"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Pasos Secuenciales de Aprobación">
+                            <field name="line_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="sequence" string="Paso"/>
+                                    <field name="name"/>
+                                    <field name="approver_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_payment_approval_policy_list" model="ir.ui.view">
+        <field name="name">payment.approval.policy.list</field>
+        <field name="model">payment.approval.policy</field>
+        <field name="arch" type="xml">
+            <list string="Políticas de Aprobación">
+                <field name="name"/>
+                <field name="minimum_amount"/>
+                <field name="maximum_amount"/>
+                <field name="validation_steps"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_payment_approval_policy" model="ir.actions.act_window">
+        <field name="name">Políticas de Aprobación</field>
+        <field name="res_model">payment.approval.policy</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="rule_payment_request_multicompany" model="ir.rule">
+        <field name="name">Solicitudes de Pago Multi-Compañía</field>
+        <field name="model_id" ref="model_payment_request"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_payment_approval_policy_multicompany" model="ir.rule">
+        <field name="name">Políticas de Aprobación Multi-Compañía</field>
+        <field name="model_id" ref="model_payment_approval_policy"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record id="rule_payment_request_requester_own" model="ir.rule">
+        <field name="name">Solicitante: Solo ver solicitudes propias</field>
+        <field name="model_id" ref="model_payment_request"/>
+        <field name="groups" eval="[(4, ref('group_payment_request_requester'))]"/>
+        <field name="domain_force">[('requester_id', '=', user.id)]</field>
+    </record>
+
+    <record id="rule_payment_request_officers_all" model="ir.rule">
+        <field name="name">Aprobador/Tesorería: Ver todas las de su compañía</field>
+        <field name="model_id" ref="model_payment_request"/>
+        <field name="groups" eval="[(4, ref('group_payment_request_approver')), (4, ref('group_payment_request_treasury'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_payment_request_reject_wizard_form" model="ir.ui.view">
+        <field name="name">payment.request.reject.wizard.form</field>
+        <field name="model">payment.request.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Rechazar Solicitud de Pago">
+                <sheet>
+                    <group>
+                        <field name="request_id" readonly="1"/>
+                        <field name="reason" placeholder="Indique detalladamente la razón del rechazo..." required="1"/>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirmar Rechazo" type="object" name="action_reject" class="btn-danger"/>
+                    <button string="Cancelar" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

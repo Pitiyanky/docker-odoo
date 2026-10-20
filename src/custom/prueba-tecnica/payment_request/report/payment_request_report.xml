@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_payment_request" model="ir.actions.report">
+        <field name="name">Solicitud de Pago</field>
+        <field name="model">payment.request</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">payment_request.report_payment_request_template</field>
+        <field name="report_file">payment_request.report_payment_request_template</field>
+        <field name="binding_model_id" ref="model_payment_request"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_payment_request_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="text-center mt-3">Comprobante de Solicitud de Pago</h2>
+                        <h4 class="text-center text-muted"><t t-esc="o.name"/></h4>
+                        
+                        <div class="row mt-4">
+                            <div class="col-6">
+                                <strong>Proveedor:</strong> <span t-field="o.partner_id.name"/><br/>
+                                <strong>RIF / Documento:</strong> <span t-field="o.partner_id.vat"/><br/>
+                                <strong>Fecha Solicitud:</strong> <span t-field="o.date"/>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Solicitante:</strong> <span t-field="o.requester_id.name"/><br/>
+                                <strong>Estado Actual:</strong> <span t-field="o.state"/><br/>
+                                <strong>Monto Solicitado:</strong> 
+                                <h4><span t-field="o.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></h4>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <h5>Concepto:</h5>
+                                <p class="border p-2 bg-light"><span t-field="o.concept"/></p>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" t-if="o.historical_ids">
+                            <div class="col-12">
+                                <h5>Historial de Pasos Aprobados:</h5>
+                                <table class="table table-sm table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Paso</th>
+                                            <th>Fase / Rol</th>
+                                            <th>Aprobador</th>
+                                            <th>Fecha y Hora</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr t-foreach="o.historical_ids" t-as="h">
+                                            <td><span t-field="h.step_number"/></td>
+                                            <td><span t-field="h.step_name"/></td>
+                                            <td><span t-field="h.user_id.name"/></td>
+                                            <td><span t-field="h.date"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3" t-if="o.payment_id">
+                            <div class="col-12">
+                                <div class="card p-2 bg-light">
+                                    <h6>Datos del Desembolso en Contabilidad:</h6>
+                                    <strong>Comprobante de Pago:</strong> <span t-field="o.payment_id.name"/><br/>
+                                    <strong>Diario:</strong> <span t-field="o.payment_id.journal_id.name"/><br/>
+                                    <strong>Monto Liquidado:</strong> <span t-field="o.payment_id.amount"/> <span t-field="o.payment_id.currency_id.symbol"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
