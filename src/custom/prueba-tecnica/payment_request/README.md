@@ -42,9 +42,6 @@ Módulo desarrollado para Odoo 19 que implementa un flujo completo, seguro y aud
 ### Preguntas para Carolina:
 1. **Facturas Existentes vs. Desembolsos Libres:** ¿Las solicitudes de pago deben permitir seleccionar facturas de proveedor ya cargadas en Odoo para conciliarlas automáticamente, o son exclusivamente para anticipos, compras menores y pagos sin factura previa?
 2. **Umbral de Pagos Grandes:** ¿Cuál es el monto exacto a partir del cual una solicitud deja de requerir únicamente al Jefe de Área y pasa a necesitar la aprobación de Gerencia General?
-3. **Criterio de Tasa de Cambio (USD $\rightarrow$ VES):** Al pagar en bolívares facturas emitidas en dólares, ¿se debe utilizar obligatoriamente la tasa oficial del BCV de la fecha de pago o el sistema debe permitir pactar una tasa especial con el proveedor?
-4. **Retenciones Impositivas:** Para los pagos en Venezuela, ¿se deben calcular y deducir retenciones de IVA o ISLR al momento en que Tesorería emite el pago?
-5. **Insuficiencia de Fondos:** Si al momento de pagar no hay saldo suficiente en banco, ¿la solicitud debe poder ponerse en un estado de espera/programada sin ser rechazada?
 
 ### Supuestos Adoptados para Avanzar:
 1. **Políticas Secuenciales:** Se modeló `payment.approval.policy` con líneas secuenciales (`sequence`). Pagos grandes transitan paso a paso (ej. Paso 1: Jefe de Área $\rightarrow$ Paso 2: Gerencia).
